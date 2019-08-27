@@ -31,11 +31,10 @@ app
 	.use(router.allowedMethods()) //自动设置请求头
 
 router.get('/',async ctx => {
-	let res = await dbs.insert("user",{name:"name111"})
 	ctx.body = {
 		status:200,
 		body:{
-			msg:res
+			msg:'Hello World'
 		},
 		msg:"请求成功"
 	}
