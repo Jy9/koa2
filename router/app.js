@@ -3,20 +3,16 @@ const router = require('koa-router')(),
 
 router
 	.get('/',async (ctx) => {
-		let res = await dbs.insert("user",{name:"name111"})
-		console.log(ctx)
 		ctx.body = {
 			status:200,
-			body:res,
-			msg:'首页'
+			body:ctx.query
 		}
 	})
 	
-	.get('/list',(ctx) => {
+	.post('/list',async ctx => {
 		ctx.body = {
 			status:200,
-			body:ctx.query,
-			msg:'列表'
+			body:ctx.request.body
 		}
 	})
 

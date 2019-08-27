@@ -5,13 +5,71 @@
 		<title></title>
 	</head>
 	<body>
+		<span id="app">
+			<p @click="login">登录</p>
+			<input type="text" placeholder="num" v-model="num1">
+			<input type="text" placeholder="pw" v-model="pw1">
+			
+			<p @click="signin">注册</p>
+			<input type="text" placeholder="num"  v-model="num2">
+			<input type="text" placeholder="pw" v-model="pw2">
+			<input type="text" placeholder="name" v-model="name">
+		</span>
 	</body>
 </html>
+<script src="https://cdn.staticfile.org/vue/2.6.10/vue.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	new Vue({
+		el:"#app",
+		data:{
+			num1:'',
+			pw1:'',
+			num2:'',
+			pw2:'',
+			name:'',
+		},
+		methods:{
+			login(){
+				let that = this
+				fetch("http://localhost:3000/user/login",{
+					method:'post',
+					body:JSON.stringify({num:that.num1,pw:that.pw1}),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(res => res.json()).then(res => {
+					
+					if(res.status === 200){
+						console.log(res)
+					}else{
+						alert(res.msg)
+					}
+				})
+			},
+			signin(){
+				let that = this
+				fetch("http://localhost:3000/user/signin",{
+					method:'post',
+					body:JSON.stringify({num:that.num2,pw:that.pw2,name:that.name}),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(res => res.json()).then(res => {
+					if(res.status === 200){
+						console.log(res)
+					}else{
+						alert(res.msg)
+					}
+				})
+			}
+		}
+	})
 	
+	
+	// fetch("http://localhost:3000/app?name=ppiq").then(res => res.json()).then(res => {
+	// 	console.log(res)
+	// })
 // setInterval(() => {
-// 	fetch("http://localhost:3000/user").then(res => res.json()).then(res => {
-// 		console.log(res)
-// 	})
+// 	
 // },1000)
 </script>
