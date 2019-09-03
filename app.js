@@ -15,7 +15,7 @@ app
 	.use(router.routes()) //启动路由
 	.use(router.allowedMethods()) //自动设置请求头
 
-//设置中间件
+	//中间件
 	.use((ctx, next) => {
 		console.log(new Date())
 		next()
@@ -33,13 +33,7 @@ app
 
 
 router.get('/',ctx => {
-	ctx.body = {
-		status:200,
-		body:{
-			msg:'Hello World'
-		},
-		msg:"请求成功"
-	}
+	ctx.body = "Hello World"
 	
 })
 //引入路由模块并启用

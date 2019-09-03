@@ -14,6 +14,7 @@
 			<input type="text" placeholder="num"  v-model="num2">
 			<input type="text" placeholder="pw" v-model="pw2">
 			<input type="text" placeholder="name" v-model="name">
+			<p @click="update">修改信息</p>
 		</span>
 	</body>
 </html>
@@ -27,6 +28,7 @@
 			num2:'',
 			pw2:'',
 			name:'',
+			user:null
 		},
 		methods:{
 			login(){
@@ -40,7 +42,7 @@
 				}).then(res => res.json()).then(res => {
 					
 					if(res.status === 200){
-						console.log(res)
+						that.user = res.data
 					}else{
 						alert(res.msg)
 					}
@@ -61,10 +63,29 @@
 						alert(res.msg)
 					}
 				})
+			},
+			update(){
+				let that = this
+				if(!that.user){
+					alert("登录后修改")
+					return false
+				}
+				fetch("http://localhost:3000/user/update",{
+					method:'post',
+					body:JSON.stringify({oldnum:that.user.num,num:that.num2,pw:that.pw2,name:that.name}),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(res => res.json()).then(res => {
+					if(res.status === 200){
+						console.log(res)
+					}else{
+						alert(res.msg)
+					}
+				})
 			}
 		}
 	})
-	
 	
 	// fetch("http://localhost:3000/app?name=ppiq").then(res => res.json()).then(res => {
 	// 	console.log(res)

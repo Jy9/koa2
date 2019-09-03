@@ -19,7 +19,7 @@ router
 		let query = ctx.request.body
 		let user = await dbs.find('user',{num:query.num})
 		body.data = ""
-				body.msg = "登录成功"
+		body.msg = "登录成功"
 		if(user.length<1){
 			body.status = 201
 			body.msg = "没有该用户"
@@ -53,6 +53,31 @@ router
 			body.status = 201
 			body.data = '用户账户已存在'
 			body.msg = '用户账户已存在'
+		}
+		ctx.body = body
+	})
+	
+	.post('/update',async ctx => {
+		let query = ctx.request.body
+		let num = query.oldnum
+		delete query.oldnum
+		let user = await dbs.find('user',{num:num})
+		if(user.length<1){
+			body.status = 201
+			body.data = '没有找到该用户'
+			body.msg = '没有找到该用户'
+		}else{
+			console.log(query)
+			let res = await dbs.update('user',{num:query.oldnum},query)
+			if(res){
+				body.status = 200
+				body.data = '修改成功'
+				body.msg = '修改成功'
+			}else{
+				body.status = 201
+				body.data = '修改失败 重新提交修改'
+				body.msg = '修改失败 重新提交修改'
+			}
 		}
 		ctx.body = body
 	})
